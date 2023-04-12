@@ -1,0 +1,48 @@
+- name: update cache 
+  apt:
+    update_cache: yes
+
+- name: update SO
+  apt:
+    name: "*"
+    state: latest
+
+- name: Atualize o índice do pacote 
+  apt:
+    name: 
+      -  ca-certificates 
+      -  curl
+      -  gnupg
+    state: present
+
+- name: Cria um diretório
+  ansible.builtin.file:
+    path: /etc/apt/keyrings 
+    state: directory
+    mode: '0755'
+
+- name: Adicione a chave GPG oficial do Docker
+  get_url:
+    url:  https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.gpg
+
+- name: comando para configurar o repositório
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    filename: docker
+
+- name: update cache 
+  apt:
+    update_cache: yes   
+    
+- name: Add users company
+  user:
+    name: leobittes
+    shell: /bin/bash
+    home: /home/leobittes
+
+- name: Add user company for sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    line: "leobittes    ALL=(ALL:ALL) NOPASSWD: ALL"    
