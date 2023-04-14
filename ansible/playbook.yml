@@ -4,6 +4,6 @@
      # - mysql
      # - zabbix
      - docker
-     # - container
+     - container
      
 

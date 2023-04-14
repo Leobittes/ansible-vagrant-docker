@@ -1,0 +1,26 @@
+- name: update cache 
+  apt:
+    update_cache: yes
+
+- name: Install docker 
+  apt:
+    name: 
+     - docker-ce 
+     - docker-ce-cli 
+     - containerd.io 
+     - docker-buildx-plugin 
+     - docker-compose-plugin
+    state: latest
+
+- name: Download Docker compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose  
+    mode: 0755
+
+- name: Install docker-py
+  pip:
+    name: docker-py 
+
+# - name: start_docker
+#   service: name=docker enable=yes state=restarted

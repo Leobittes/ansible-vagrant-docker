@@ -32,6 +32,12 @@
     state: present
     filename: docker
 
+- name: Instala Python3-pip
+  apt:
+    update_cache: yes
+    state: latest
+    name: python3-pip
+
 - name: update cache 
   apt:
     update_cache: yes   
