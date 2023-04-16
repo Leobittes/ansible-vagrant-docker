@@ -3,7 +3,7 @@
   roles:
      # - mysql
      # - zabbix
+     - packs-docker
      - docker
-     - container
      
 
