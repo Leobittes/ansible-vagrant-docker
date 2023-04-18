@@ -1,8 +1,8 @@
-- name: update cache 
+- name: Atualiza cache 
   apt:
     update_cache: yes
 
-- name: Install docker 
+- name: Instalar docker 
   apt:
     name: 
      - docker-ce 
@@ -12,7 +12,7 @@
      - docker-compose-plugin
     state: latest
 
-- name: Download Docker compose
+- name: Baixar Docker compose
   get_url:
     url: https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose  
@@ -29,23 +29,25 @@
     name: "docker<5" 
   become: yes
 
-# - name: Setup more docker dependencies
-#   pip:
-#     name: "websocket-client<1" 
-#   become: yes  
-
-# - name: pull an image
+# - name: Baixar uma imagem 
 #   docker_image:
-#     name: nginx:latest
+#     name: leobittes/viacep-docker:1.0
 #     source: pull
 
-# - name: Build image and with build args
-#   docker_image:
+
+- name: iniciar contêineres do Docker
+  become: true
+  docker_container:
+    name: desafio-06
+    image: leobittes/viacep-docker:1.0
+    state: started
+    restart_policy: always
+    ports:
+      - "80:80"
+
+# - name: Para o container
+#   docker_container:
 #     name: desafio-06
-#     build:
-#       path: /var/lib/docker/overlay2
-#       args:
-#         log_volume: /var/log/myapp
-#         listen_port: 8080
-#     source: build    
-        
+#     state: stopped      
+
+   
